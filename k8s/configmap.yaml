@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-starter-config
+  namespace: k8s-starter
+data:
+  SERVER_PORT: "8080"
