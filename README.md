@@ -125,9 +125,9 @@ Example:
 ```text
 ➜ k8s-starter-project git:(master) ✗ minikube service k8s-starter -n k8s-starter
 ┌─────────────┬─────────────┬─────────────┬───────────────────────────┐
-│ NAMESPACE   │ NAME        │ TARGET PORT │ URL                │
+│ NAMESPACE   │ NAME        │ TARGET PORT │ URL                       │
 ├─────────────┼─────────────┼─────────────┼───────────────────────────┤
-│ k8s-starter │ k8s-starter │ 8080 │ http://192.168.49.2:30080 │
+│ k8s-starter │ k8s-starter │ 8080        │ http://192.168.49.2:30080 │
 └─────────────┴─────────────┴─────────────┴───────────────────────────┘
 🎉 Opening service k8s-starter/k8s-starter in default browser...
 ```
