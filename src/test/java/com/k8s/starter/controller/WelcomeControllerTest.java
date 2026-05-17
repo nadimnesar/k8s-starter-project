@@ -25,6 +25,24 @@ class WelcomeControllerTest {
     }
 
     @Test
+    void liveness() {
+        var body = rest.get()
+                .uri("http://localhost:" + port + "/health/liveness")
+                .retrieve()
+                .body(String.class);
+        assertThat(body).contains("UP");
+    }
+
+    @Test
+    void readiness() {
+        var body = rest.get()
+                .uri("http://localhost:" + port + "/health/readiness")
+                .retrieve()
+                .body(String.class);
+        assertThat(body).contains("UP");
+    }
+
+    @Test
     void welcomeV1() {
         var response = rest.get()
                 .uri("http://localhost:" + port + "/welcome")

@@ -1,53 +1,59 @@
 # k8s-starter-project
 
 [![Java](https://img.shields.io/badge/Java-25-%23ED8B00?logo=openjdk)](https://openjdk.org/projects/jdk/25/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?logo=springboot)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.6-6DB33F?logo=springboot)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 
-A modern, minimal **Spring Boot 4 + Java 25** starter project designed for Kubernetes deployment. Serves as a reference
-template for building and deploying containerized Spring Boot services on Minikube.
+A minimal **Spring Boot 4.0.6 + Java 25** starter project for Kubernetes. It includes a versioned welcome API,
+actuator health probes, and ready-to-apply Kubernetes manifests for Minikube.
 
 ## Prerequisites
 
-* Java 25
-* Maven 3.9+
-* Docker
-* Minikube
-* kubectl
+- Java 25
+- Maven 3.9+
+- Docker
+- Minikube
+- kubectl
 
-## Quick Start
+## Run locally
 
 ```bash
-# Clone and run locally (without Kubernetes)
 git clone https://github.com/nadimnesar/k8s-starter-project.git
 cd k8s-starter-project
-
-# Run the app
 make run
 ```
 
-## API Reference
+The app starts on port `8080` by default.
 
-| Endpoint       | Header               | Response                        |
-|----------------|----------------------|---------------------------------|
-| `GET /health`  | —                    | `{"status":"UP"}`               |
-| `GET /welcome` | `X-API-Version: 1.0` | `{"text":"...","apiVersion":1}` |
-| `GET /welcome` | `X-API-Version: 2.0` | `{"text":"...","apiVersion":2}` |
-
-## Testing
+## Test
 
 ```bash
 make test
 ```
 
-## Kubernetes (Minikube) — Step by Step
+## API reference
 
-### 1. Clone the repository
+| Endpoint                | Header               | Description                |
+|-------------------------|----------------------|----------------------------|
+| `GET /health`           | none                 | Overall application health |
+| `GET /health/liveness`  | none                 | Liveness probe             |
+| `GET /health/readiness` | none                 | Readiness probe            |
+| `GET /welcome`          | `X-API-Version: 1.0` | Version 1 welcome message  |
+| `GET /welcome`          | `X-API-Version: 2.0` | Version 2 welcome message  |
+
+If no `X-API-Version` header is provided, the API uses the default version configured in `application.yml`.
+
+Example requests:
 
 ```bash
-git clone https://github.com/nadimnesar/k8s-starter-project.git
-cd k8s-starter-project
+curl http://localhost:8080/health
+curl http://localhost:8080/health/liveness
+curl http://localhost:8080/health/readiness
+curl http://localhost:8080/welcome -H "X-API-Version: 1.0"
+curl http://localhost:8080/welcome -H "X-API-Version: 2.0"
 ```
+
+## Kubernetes deployment with Minikube
 
 ### 1. Start Minikube
 
@@ -99,6 +105,13 @@ Apply all manifests (namespace, ConfigMap, deployment, service):
 kubectl apply -f k8s/
 ```
 
+This creates:
+
+- namespace `k8s-starter-dev`
+- ConfigMap `k8s-starter-config`
+- Deployment `k8s-starter-deployment`
+- Service `k8s-starter-svc`
+
 Watch the pods spin up:
 
 ```bash
@@ -111,7 +124,7 @@ Check logs to ensure the application is running:
 kubectl -n k8s-starter-dev logs -l app=k8s-starter
 ```
 
-### 6. Access the application
+### 6. Access the service
 
 ```bash
 minikube service k8s-starter-svc -n k8s-starter-dev
@@ -150,7 +163,7 @@ kubectl delete -f k8s/
 
 ## Contributing
 
-Contributions are welcome! Open an issue or submit a pull request.
+Contributions are welcome. Open an issue or submit a pull request.
 
 ## License
 
