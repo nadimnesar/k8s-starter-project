@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-starter
-  namespace: k8s-starter
+  name: k8s-starter-deployment
+  namespace: k8s-starter-dev
   labels:
-    app: k8s-starter
+    app: k8s-starter # This label is used to identify which application this Deployment belongs to.
+    environment: development
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: k8s-starter
+      app: k8s-starter # Find Pods that have this label, and manage them.
   template:
     metadata:
       labels:
-        app: k8s-starter
+        app: k8s-starter # Give every new Pod this label
     spec:
       containers:
         - name: k8s-starter
@@ -39,8 +40,8 @@ spec:
             periodSeconds: 5
           resources:
             requests:
-              cpu: 250m
-              memory: 256Mi
+              cpu: 250m # 250 millicpu = 0.25 CPU core (guaranteed minimum)
+              memory: 256Mi # 256 mebibytes of RAM (guaranteed minimum)
             limits:
-              cpu: 500m
-              memory: 512Mi
+              cpu: 500m # 0.5 CPU core (hard cap, container cannot exceed)
+              memory: 512Mi # 512 MiB RAM (hard cap, Out Of Memory killed if exceeded)

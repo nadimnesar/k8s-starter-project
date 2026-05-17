@@ -1,4 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: k8s-starter
+  name: k8s-starter-dev
+  labels:
+    app: k8s-starter # This label is used to identify which application this Namespace belongs to.
+    environment: development
