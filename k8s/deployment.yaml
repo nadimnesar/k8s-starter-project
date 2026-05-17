@@ -15,6 +15,7 @@ spec:
     metadata:
       labels:
         app: k8s-starter # Give every new Pod this label
+        environment: development
     spec:
       containers:
         - name: k8s-starter
