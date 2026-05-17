@@ -102,19 +102,19 @@ kubectl apply -f k8s/
 Watch the pods spin up:
 
 ```bash
-kubectl -n k8s-starter get pods
+kubectl -n k8s-starter-dev get pods
 ```
 
 Check logs to ensure the application is running:
 
 ```bash
-kubectl -n k8s-starter logs -l app=k8s-starter
+kubectl -n k8s-starter-dev logs -l app=k8s-starter
 ```
 
 ### 6. Access the application
 
 ```bash
-minikube service k8s-starter -n k8s-starter
+minikube service k8s-starter-svc -n k8s-starter-dev
 ```
 
 This opens the service in your browser. Also give you NodePort and Minikube IP to access the endpoints directly via
@@ -123,13 +123,13 @@ curl.
 Example:
 
 ```text
-➜ k8s-starter-project git:(master) ✗ minikube service k8s-starter -n k8s-starter
-┌─────────────┬─────────────┬─────────────┬───────────────────────────┐
-│ NAMESPACE   │ NAME        │ TARGET PORT │ URL                       │
-├─────────────┼─────────────┼─────────────┼───────────────────────────┤
-│ k8s-starter │ k8s-starter │ 8080        │ http://192.168.49.2:30080 │
-└─────────────┴─────────────┴─────────────┴───────────────────────────┘
-🎉 Opening service k8s-starter/k8s-starter in default browser...
+➜  k8s-starter-project git:(master) ✗ minikube service k8s-starter-svc -n k8s-starter-dev
+┌─────────────────┬─────────────────┬─────────────┬───────────────────────────┐
+│    NAMESPACE    │      NAME       │ TARGET PORT │            URL            │
+├─────────────────┼─────────────────┼─────────────┼───────────────────────────┤
+│ k8s-starter-dev │ k8s-starter-svc │ 8080        │ http://192.168.49.2:30080 │
+└─────────────────┴─────────────────┴─────────────┴───────────────────────────┘
+🎉  Opening service k8s-starter-dev/k8s-starter-svc in default browser...
 ```
 
 Curl the endpoints:
